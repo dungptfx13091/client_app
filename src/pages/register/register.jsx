@@ -2,6 +2,7 @@ import "./register.css";
 import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/navbar/Navbar";
 import { Component } from "react";
+import { da } from "date-fns/locale";
 
 class Register extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Register extends Component {
       fullName: "",
       phoneNumber: "",
       email: "",
-      isAdmin: true,
+      isAdmin: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -22,7 +23,7 @@ class Register extends Component {
       this.state;
     console.log(userName, password, fullName, phoneNumber, email, isAdmin);
 
-    fetch("http://localhost:3000/register", {
+    fetch("http://localhost:5000/register", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -40,11 +41,11 @@ class Register extends Component {
       }),
     })
       .then((res) => {
-        console.log(res.body);
-        res.json();
+        console.log(res.json());
+        return res.json;
       })
       .then((data) => {
-        console.log(data, "User Register");
+        console.log(data);
       });
   }
 
