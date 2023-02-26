@@ -9,16 +9,18 @@ import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 
-const List = () => {
+const List = ({ isLogin }) => {
+  const data = window.localStorage.getItem("searchHotel");
+  const hotels = JSON.parse(data);
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state.destination);
+  const [destination, setDestination] = useState("city");
   const [date, setDate] = useState(location.state.date);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
 
   return (
     <div>
-      <Navbar />
+      <Navbar isLogin={isLogin} />
       <Header type="list" />
       <div className="listContainer">
         <div className="listWrapper">
@@ -89,9 +91,9 @@ const List = () => {
             <button>Search</button>
           </div>
           <div className="listResult">
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
+            {hotels.map(function (hotel) {
+              return <SearchItem key={hotel._id} hotel={hotel} />;
+            })}
           </div>
         </div>
       </div>

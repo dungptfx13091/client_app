@@ -1,6 +1,8 @@
+import { useEffect, useState } from "react";
+
 import "./propertyList.css";
 
-const PropertyList = () => {
+const PropertyList = ({ hotelByType }) => {
   return (
     <div className="pList">
       <div className="pListItem">
@@ -11,7 +13,7 @@ const PropertyList = () => {
         />
         <div className="pListTitles">
           <h1>Hotels</h1>
-          <h2>233 hotels</h2>
+          <h2>{hotelByType.hotel.length} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -22,7 +24,7 @@ const PropertyList = () => {
         />
         <div className="pListTitles">
           <h1>Apartments</h1>
-          <h2>2331 hotels</h2>
+          <h2>{hotelByType.apartment.length} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -33,7 +35,7 @@ const PropertyList = () => {
         />
         <div className="pListTitles">
           <h1>Resorts</h1>
-          <h2>2331 hotels</h2>
+          <h2>{hotelByType.resort.length} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -44,7 +46,7 @@ const PropertyList = () => {
         />
         <div className="pListTitles">
           <h1>Villas</h1>
-          <h2>2331 hotels</h2>
+          <h2>{hotelByType.villa.length} hotels</h2>
         </div>
       </div>
       <div className="pListItem">
@@ -55,7 +57,7 @@ const PropertyList = () => {
         />
         <div className="pListTitles">
           <h1>Cabins</h1>
-          <h2>2331 hotels</h2>
+          <h2>{hotelByType.cabin.length} hotels</h2>
         </div>
       </div>
     </div>

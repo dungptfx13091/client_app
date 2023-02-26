@@ -2,7 +2,6 @@ import "./register.css";
 import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/navbar/Navbar";
 import { Component } from "react";
-import { da } from "date-fns/locale";
 
 class Register extends Component {
   constructor(props) {
@@ -14,6 +13,7 @@ class Register extends Component {
       phoneNumber: "",
       email: "",
       isAdmin: false,
+      oldUser: "hidden",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -21,9 +21,8 @@ class Register extends Component {
     e.preventDefault();
     const { userName, password, fullName, phoneNumber, email, isAdmin } =
       this.state;
-    console.log(userName, password, fullName, phoneNumber, email, isAdmin);
 
-    fetch("http://localhost:5000/register", {
+    fetch("http://localhost:5000/users/register", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -41,11 +40,17 @@ class Register extends Component {
       }),
     })
       .then((res) => {
-        console.log(res.json());
-        return res.json;
+        return res.json();
       })
       .then((data) => {
-        console.log(data);
+        if (data.oldUser) {
+          console.log("User Exist!");
+          this.setState({ oldUser: "visible" });
+        } else {
+          console.log("Success!");
+          this.setState({ oldUser: "hidden" });
+          window.location.href = "/login";
+        }
       });
   }
 
@@ -66,7 +71,6 @@ class Register extends Component {
                 this.setState({ userName: e.target.value });
               }}
             />
-
             <label htmlFor="password">Password</label>
             <input
               type="password"
@@ -76,7 +80,6 @@ class Register extends Component {
                 this.setState({ password: e.target.value });
               }}
             />
-
             <label htmlFor="fullName">Fullname</label>
             <input
               type="text"
@@ -86,7 +89,6 @@ class Register extends Component {
                 this.setState({ fullName: e.target.value });
               }}
             />
-
             <label htmlFor="phoneNumber">Phone Number</label>
             <input
               type="text"
@@ -96,7 +98,6 @@ class Register extends Component {
                 this.setState({ phoneNumber: e.target.value });
               }}
             />
-
             <label htmlFor="email">Email</label>
             <input
               type="text"
@@ -106,7 +107,20 @@ class Register extends Component {
                 this.setState({ email: e.target.value });
               }}
             />
-
+            <p
+              style={{
+                visibility: this.state.oldUser,
+                marginTop: "-6px",
+                paddingBottom: "6px",
+                fontSize: 13,
+                color: "red",
+              }}
+            >
+              Email already exits.Try another email, or{" "}
+              <span>
+                <a href="/login">login</a>
+              </span>{" "}
+            </p>
             <button type="submit">Create Account</button>
           </form>
         </div>
